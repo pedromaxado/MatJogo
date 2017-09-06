@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Command : MonoBehaviour 
 {
-	public static float PieceSizeChangeRatio = 0.01f;
+	public static float PieceSizeChangeRatio = 0.1f;
 	public static float PieceMaxSize = 1.5f;
-	public static float PieceSpeed = 0.5f;
+	public static float PieceSpeed = 15.0f;
+	public static float PieceMinDist = 5.0f;
 
 	public UnityEngine.UI.Image p1;
 	public UnityEngine.UI.Image p2;
@@ -24,7 +25,7 @@ public class Command : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		stage = 1;
+		stage = 5;
 
 		p01 = p1.transform.position;
 		p02 = p2.transform.position;
@@ -38,6 +39,13 @@ public class Command : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if (Input.GetKeyDown (KeyCode.Space) && stage == 5)
+		{
+			stage = 1;
+			p01 = p1.transform.position;
+			p02 = p2.transform.position;
+		}
+
 		switch (stage)
 		{
 			case 1:
@@ -46,8 +54,14 @@ public class Command : MonoBehaviour
 			case 2:
 				Stage2 ();
 				break;
+			case 3:
+				Stage3 ();
+				break;
+			case 4:
+				Stage4 ();
+				break;
 			case 5:
-				StageEnd ();
+				Stage5 ();
 				break;
 		}
 	}
@@ -75,8 +89,26 @@ public class Command : MonoBehaviour
 	{
 		p1.rectTransform.localScale = s01 * Command.PieceMaxSize;
 		p2.rectTransform.localScale = s02 * Command.PieceMaxSize;
+		stage = 3;
 	}
 
+	private void Stage3()
+	{
+		if (Vector3.Distance (p1.transform.position, p02) > Command.PieceMinDist)
+		{
+			p1.transform.position = Vector3.Lerp (p1.transform.position, p02, Time.deltaTime * Command.PieceSpeed);
+			p2.transform.position = Vector3.Lerp (p2.transform.position, p01, Time.deltaTime * Command.PieceSpeed);
+
+			//p1.transform.position = p1.transform.position + ((p02 - p1.transform.position).normalized * Command.PieceSpeed);
+			//p2.transform.position = p2.transform.position + ((p01 - p2.transform.position).normalized * Command.PieceSpeed);
+		}
+		else
+		{
+			p1.transform.position = p02;
+			p2.transform.position = p01;
+			stage = 4;
+		}
+	}
 
 	private void Stage4()
 	{
@@ -96,7 +128,7 @@ public class Command : MonoBehaviour
 		}
 	}
 
-	private void StageEnd()
+	private void Stage5()
 	{
 		p1.rectTransform.localScale = s01;
 		p2.rectTransform.localScale = s02;
