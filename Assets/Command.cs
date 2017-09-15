@@ -98,9 +98,6 @@ public class Command : MonoBehaviour
 		{
 			p1.transform.position = Vector3.Lerp (p1.transform.position, p02, Time.deltaTime * Command.PieceSpeed);
 			p2.transform.position = Vector3.Lerp (p2.transform.position, p01, Time.deltaTime * Command.PieceSpeed);
-
-			//p1.transform.position = p1.transform.position + ((p02 - p1.transform.position).normalized * Command.PieceSpeed);
-			//p2.transform.position = p2.transform.position + ((p01 - p2.transform.position).normalized * Command.PieceSpeed);
 		}
 		else
 		{
