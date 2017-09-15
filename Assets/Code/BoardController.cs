@@ -12,6 +12,9 @@ public class BoardController : MonoBehaviour
 	public float boardYOffset = 150.0f;
 	public float stepSize = 5.0f;
 	public GameObject baseObject;
+	public GameObject[] baseObjects;
+
+	public float[] probabilities;
 
 	GameObject[,] board;
 
@@ -24,8 +27,17 @@ public class BoardController : MonoBehaviour
 		{
 			for (int j = 0; j < boardColumns; j++)
 			{
-				board [i, j] = (GameObject)(GameObject.Instantiate (baseObject, new Vector3 (j * stepSize + boardXOffset, i * stepSize + boardYOffset, 0.0f), Quaternion.identity));
-				board [i, j].transform.parent = this.transform;
+				float p = Random.value;
+				float acc = probabilities [0];
+				int k = 0;
+				while (p > acc) {
+					k++;
+					acc += probabilities [k];
+				}
+
+
+				board [i, j] = (GameObject)(GameObject.Instantiate (baseObjects[k], new Vector3 (j * stepSize + boardXOffset, i * stepSize + boardYOffset, 0.0f), Quaternion.identity));
+				board [i, j].transform.SetParent (this.transform);
 			}
 		}
 	}
