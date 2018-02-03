@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d1b8ee8ea9feb9941b450882882e0cd6
-timeCreated: 1517701138
+timeCreated: 1517701552
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -63,7 +63,7 @@ TextureImporter:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -76,6 +76,22 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 1
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -84,11 +100,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7
-        width: 145
-        height: 141
+        y: 8
+        width: 144
+        height: 139
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -97,12 +113,12 @@ TextureImporter:
       name: chips_1
       rect:
         serializedVersion: 2
-        x: 206
-        y: 7
-        width: 146
-        height: 141
+        x: 207
+        y: 8
+        width: 144
+        height: 139
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -111,12 +127,12 @@ TextureImporter:
       name: chips_2
       rect:
         serializedVersion: 2
-        x: 413
-        y: 7
-        width: 146
-        height: 141
+        x: 414
+        y: 8
+        width: 144
+        height: 139
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -125,12 +141,12 @@ TextureImporter:
       name: chips_3
       rect:
         serializedVersion: 2
-        x: 620
-        y: 7
-        width: 146
-        height: 141
+        x: 621
+        y: 8
+        width: 144
+        height: 139
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -139,12 +155,12 @@ TextureImporter:
       name: chips_4
       rect:
         serializedVersion: 2
-        x: 827
-        y: 7
-        width: 145
-        height: 141
+        x: 828
+        y: 8
+        width: 144
+        height: 139
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
