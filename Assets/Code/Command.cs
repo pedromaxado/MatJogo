@@ -12,7 +12,7 @@ public class Command : MonoBehaviour
 	public UnityEngine.UI.Image p1;
 	public UnityEngine.UI.Image p2;
 
-	private int stage;
+	private int stage = 6;
 
 	private Vector3 p01;
 	private Vector3 p02;
@@ -22,10 +22,15 @@ public class Command : MonoBehaviour
 
 	private Color c;
 
+	private System.Action matchingControllerCallback;
+
 	// Use this for initialization
-	void Start () 
+	public void Setup (GameObject _p1, GameObject _p2, System.Action callback) 
 	{
-		stage = 5;
+		matchingControllerCallback = callback;
+
+		p1 = _p1.GetComponent<UnityEngine.UI.Image> ();
+		p2 = _p2.GetComponent<UnityEngine.UI.Image> ();
 
 		p01 = p1.transform.position;
 		p02 = p2.transform.position;
@@ -34,18 +39,13 @@ public class Command : MonoBehaviour
 		s02 = p2.rectTransform.localScale;
 
 		c = Color.white;
+
+		stage = 1;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown (KeyCode.Space) && stage == 5)
-		{
-			stage = 1;
-			p01 = p1.transform.position;
-			p02 = p2.transform.position;
-		}
-
 		switch (stage)
 		{
 			case 1:
@@ -132,5 +132,8 @@ public class Command : MonoBehaviour
 		c.a = 1.0f;
 		p1.color = c;
 		p2.color = c;
+		stage = 6;
+
+		matchingControllerCallback ();
 	}
 }

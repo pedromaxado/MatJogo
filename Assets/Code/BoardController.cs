@@ -11,7 +11,8 @@ public class BoardController : MonoBehaviour
 	public int selectorX = 0;
 	public int selectorY = 0;
 	System.Action selectorAction;
-
+	System.Action inputAction;
+	MatchingController matchingController;
 
 	public float boardXOffset = 150.0f;
 	public float boardYOffset = 150.0f;
@@ -26,7 +27,9 @@ public class BoardController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		matchingController = this.GetComponent<MatchingController> ();
 		selectorAction = MoveSelector;
+		inputAction = JustMove;
 		board = new GameObject[boardRows, boardColumns];
 
 		for (int i = 0; i < boardRows; i++)
@@ -52,13 +55,13 @@ public class BoardController : MonoBehaviour
 	void Update () 
 	{
 		selectorAction ();
-		GetInput ();
+		inputAction ();
 		selectorAction = MoveSelector;
 	}
 
 	#region Input
 
-	private void GetInput()
+	private void JustMove()
 	{
 		if (Input.GetKeyDown (KeyCode.LeftArrow))
 		{
@@ -79,15 +82,64 @@ public class BoardController : MonoBehaviour
 		{
 			selectorY = (selectorY < boardRows - 1) ? ++selectorY : selectorY;
 		}
+
+		if (Input.GetKeyDown (KeyCode.Space))
+		{
+			inputAction = StartSwap;
+		}
+	}
+
+	private GameObject swapPiece1, swapPiece2;
+
+	private void StartSwap()
+	{
+		if (Input.GetKeyDown (KeyCode.LeftArrow) && (selectorX > 0))
+		{
+			swapPiece1 = board [selectorY, selectorX];
+			swapPiece2 = board [selectorY, selectorX - 1];
+			matchingController.SwapPieces (swapPiece1, swapPiece2, PlayerAction.MoveLeft);
+			selectorX--;
+			inputAction = Static.BlankMethod;
+		}
+
+		if (Input.GetKeyDown (KeyCode.RightArrow) && (selectorX < boardColumns - 1))
+		{
+			swapPiece1 = board [selectorY, selectorX];
+			swapPiece2 = board [selectorY, selectorX + 1];
+			matchingController.SwapPieces (swapPiece1, swapPiece2, PlayerAction.MoveRight);
+			selectorX++;
+			inputAction = Static.BlankMethod;
+		}
+
+		if (Input.GetKeyDown (KeyCode.UpArrow) && (selectorY > 0))
+		{
+			swapPiece1 = board [selectorY, selectorX];
+			swapPiece2 = board [selectorY - 1, selectorX];
+			matchingController.SwapPieces (swapPiece1, swapPiece2, PlayerAction.MoveDown);
+			selectorY--;
+			inputAction = Static.BlankMethod;
+		}
+
+		if (Input.GetKeyDown (KeyCode.DownArrow) && (selectorY < boardRows - 1))
+		{
+			swapPiece1 = board [selectorY, selectorX];
+			swapPiece2 = board [selectorY + 1, selectorX];
+			matchingController.SwapPieces (swapPiece1, swapPiece2, PlayerAction.MoveUp);
+			board [selectorY, selectorX] = board [selectorY + 1, selectorX];
+			board [selectorY + 1, selectorX] = swapPiece1;
+			selectorY++;
+			inputAction = Static.BlankMethod;
+		}
+	}
+
+	public void EndSwap()
+	{
+		inputAction = JustMove;
 	}
 
 	#endregion
 
 	#region SelectorMovement
-
-	private void SelectorStopped()
-	{
-	}
 
 	private void MoveSelector()
 	{
@@ -99,7 +151,7 @@ public class BoardController : MonoBehaviour
 		else
 		{
 			selectorObject.transform.position = go.transform.position;
-			selectorAction = SelectorStopped;
+			selectorAction = Static.BlankMethod;
 		}
 	}
 
